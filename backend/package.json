@@ -1,0 +1,7 @@
+{
+  "name": "@mieruka-tax/backend",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./main.ts",
+  "types": "./main.ts"
+}
