@@ -1,0 +1,64 @@
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: tax-visibility-frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app/frontend
+      - ./packages/shared:/app/packages/shared
+      - ./packages/api-contract:/app/packages/api-contract
+      - frontend_node_modules:/app/frontend/node_modules
+      - root_node_modules:/app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000/api
+      - VIRTUAL_HOST=tax-mieruka.sample.com
+      - VIRTUAL_PORT=3000
+      - CI=true
+    command: ["/app/frontend/node_modules/.bin/vite", "--host"]
+    networks:
+      - local-network
+    restart: unless-stopped
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: tax-visibility-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    volumes:
+      - ./backend:/app
+      - ./packages/shared:/packages/shared:ro # Denoから参照用
+    networks:
+      - local-network
+    restart: unless-stopped
+
+  data-pipeline:
+    build:
+      context: ./data-pipeline
+    container_name: tax-visibility-pipeline
+    env_file:
+      - .env
+    volumes:
+      - ./data-pipeline:/app
+      - /tmp/mieruka-tax-downloads:/tmp/mieruka-tax-downloads
+    networks:
+      - local-network
+    profiles:
+      - tools
+
+volumes:
+  frontend_node_modules:
+  root_node_modules:
+
+networks:
+  local-network:
+    external: true
+    name: local-network

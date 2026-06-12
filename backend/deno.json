@@ -1,0 +1,13 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-net --allow-env --watch main.ts",
+    "start": "deno run --allow-net --allow-env main.ts"
+  },
+  "imports": {
+    "hono": "https://deno.land/x/hono@v4.3.7/mod.ts",
+    "hono/cors": "https://deno.land/x/hono@v4.3.7/middleware/cors/index.ts",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.107.0"
+,
+    "@shared/": "../packages/shared/src/"
+  }
+}
