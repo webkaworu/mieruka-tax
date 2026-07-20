@@ -1,5 +1,5 @@
-import { hc } from 'hono/client';
 import type { AppType } from '@mieruka-tax/api-contract';
+import { hc } from 'hono/client';
 
 const API_URL = import.meta.env.VITE_API_URL || '/api';
 

@@ -4,16 +4,57 @@ import { TaxRepository } from "../repositories/tax_repository.ts";
 const taxRoutes = new Hono();
 const repo = new TaxRepository();
 
-// 支出概要の取得 (ドーナツチャート・トレマップ用)
+// 支出概要の取得 (ドーナツチャート・トレマップ・詳細可視化用)
 taxRoutes.get("/expenditures", async (c) => {
   const year = Number(c.req.query("year") || new Date().getFullYear());
   const lgCode = c.req.query("lg_code") || "000000";
   const parentId = c.req.query("parent_id") || null;
   const entryType = c.req.query("entry_type") || "budget";
+  const dataType = c.req.query("data_type") as any;
+  const accountType = c.req.query("account_type") as any;
+  const budgetRevision = c.req.query("budget_revision") !== undefined ? Number(c.req.query("budget_revision")) : undefined;
 
   try {
-    const summary = await repo.getExpenditureSummary(year, lgCode, parentId, entryType);
+    const summary = await repo.getExpenditureSummary(
+      year, 
+      lgCode, 
+      parentId, 
+      entryType, 
+      dataType, 
+      accountType, 
+      budgetRevision
+    );
     return c.json(summary);
+  } catch (error) {
+    return c.json({ error: error.message }, 500);
+  }
+});
+
+// 歳入合計の取得
+taxRoutes.get("/fiscal-revenue", async (c) => {
+  const year = Number(c.req.query("year") || new Date().getFullYear());
+  const lgCode = c.req.query("lg_code") || "000000";
+  const dataType = c.req.query("data_type") as any || 'budget';
+  const accountType = c.req.query("account_type") as any || 'general';
+  const budgetRevision = c.req.query("budget_revision") !== undefined && c.req.query("budget_revision") !== ""
+    ? Number(c.req.query("budget_revision")) 
+    : 0;
+
+  try {
+    const revenue = await repo.getFiscalRevenue(year, lgCode, dataType, accountType, budgetRevision);
+    return c.json({ revenue });
+  } catch (error) {
+    return c.json({ error: error.message }, 500);
+  }
+});
+
+// 決算公開状況の取得
+taxRoutes.get("/fiscal-availability", async (c) => {
+  const yearStr = c.req.query("year");
+  const year = yearStr ? Number(yearStr) : undefined;
+  try {
+    const availability = await repo.getFiscalAvailability(year);
+    return c.json(availability);
   } catch (error) {
     return c.json({ error: error.message }, 500);
   }

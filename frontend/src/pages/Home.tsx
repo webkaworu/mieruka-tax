@@ -1,6 +1,13 @@
-import { useState, useEffect } from 'react';
+import {
+    ArrowRight,
+    Database,
+    LayoutDashboard,
+    Search,
+    ShieldCheck,
+    Wallet,
+} from 'lucide-react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
-import { LayoutDashboard, Wallet, ArrowRight, ShieldCheck, Search, Database } from 'lucide-react';
 import { useExpenditures } from '@/features/dashboard';
 
 const BudgetCounter = ({ totalBudget }: { totalBudget: number }) => {
@@ -43,10 +50,17 @@ const BudgetCounter = ({ totalBudget }: { totalBudget: number }) => {
 
 export const HomePage = () => {
     const navigate = useNavigate();
-    const { data: expenditures } = useExpenditures({ year: 2024, lg_code: '000000' });
+    const { data: expenditures } = useExpenditures({
+        year: 2024,
+        lg_code: '000000',
+    });
 
     // 総額の計算 (112兆円規模を想定)
-    const totalBudget = expenditures?.reduce((sum: number, item: any) => sum + item.amount, 0) || 112571700000000;
+    const totalBudget =
+        expenditures?.reduce(
+            (sum: number, item: any) => sum + item.amount,
+            0,
+        ) || 112571700000000;
 
     return (
         <div className="container mx-auto py-12 px-6 max-w-7xl space-y-20 pb-20">
@@ -57,7 +71,8 @@ export const HomePage = () => {
                     Fiscal Year 2024 Live Data
                 </div>
                 <h2 className="text-5xl md:text-7xl font-black text-slate-900 tracking-tighter leading-tight max-w-4xl mx-auto">
-                    日本の税金の使い道を、<br />
+                    日本の税金の使い道を、
+                    <br />
                     <span className="text-blue-600">もっと透明に。</span>
                 </h2>
                 <p className="text-slate-500 text-lg md:text-xl max-w-2xl mx-auto font-medium leading-relaxed">
@@ -80,7 +95,9 @@ export const HomePage = () => {
                             <LayoutDashboard className="w-7 h-7 text-blue-400" />
                         </div>
                         <div>
-                            <h3 className="text-2xl font-black mb-2">支出エクスプローラー</h3>
+                            <h3 className="text-2xl font-black mb-2">
+                                支出エクスプローラー
+                            </h3>
                             <p className="text-slate-400 font-medium leading-relaxed">
                                 全112兆円の予算の内訳を、カテゴリー別に詳細まで探索。ドリルダウン機能で1円単位の使途まで追いかけます。
                             </p>
@@ -101,7 +118,9 @@ export const HomePage = () => {
                             <Wallet className="w-7 h-7 text-blue-600" />
                         </div>
                         <div>
-                            <h3 className="text-2xl font-black mb-2 text-slate-900">マイ・タックス</h3>
+                            <h3 className="text-2xl font-black mb-2 text-slate-900">
+                                マイ・タックス
+                            </h3>
                             <p className="text-slate-500 font-medium leading-relaxed">
                                 あなたの納税額から、具体的な社会への貢献度を算出。おにぎりやコーヒーといった身近な単位で実感できます。
                             </p>
@@ -119,7 +138,9 @@ export const HomePage = () => {
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <Search className="w-5 h-5 text-blue-600" />
-                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">Searchable</h4>
+                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">
+                            Searchable
+                        </h4>
                     </div>
                     <p className="text-sm text-slate-500 leading-relaxed font-medium">
                         行政の複雑なPDF資料を構造化データに変換。キーワード一つで、気になる予算を瞬時に見つけ出せます。
@@ -128,7 +149,9 @@ export const HomePage = () => {
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <Database className="w-5 h-5 text-blue-600" />
-                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">Open Data</h4>
+                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">
+                            Open Data
+                        </h4>
                     </div>
                     <p className="text-sm text-slate-500 leading-relaxed font-medium">
                         収集されたデータはAPIとして公開。研究者やエンジニアが自由に二次利用できるプラットフォームを目指します。
@@ -137,7 +160,9 @@ export const HomePage = () => {
                 <div className="space-y-4">
                     <div className="flex items-center gap-3">
                         <ShieldCheck className="w-5 h-5 text-blue-600" />
-                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">Traceable</h4>
+                        <h4 className="font-black text-slate-900 uppercase text-sm tracking-wider">
+                            Traceable
+                        </h4>
                     </div>
                     <p className="text-sm text-slate-500 leading-relaxed font-medium">
                         全ての数値に「出典（エビデンス）」を明記。財務省の原文ページへ直接アクセスでき、情報の正確性を保証します。

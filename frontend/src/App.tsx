@@ -1,25 +1,52 @@
+import { Building2, Home, LayoutDashboard, Wallet } from 'lucide-react';
 import { lazy, Suspense } from 'react';
-import { BrowserRouter, Routes, Route, NavLink, Outlet, useNavigate } from 'react-router';
-import { QueryProvider } from './providers/QueryProvider';
+import {
+    BrowserRouter,
+    NavLink,
+    Outlet,
+    Route,
+    Routes,
+    useNavigate,
+} from 'react-router';
 import { HomePage } from './pages/Home';
-import { LayoutDashboard, Wallet, Home, Building2 } from 'lucide-react';
+import { QueryProvider } from './providers/QueryProvider';
 
-const DashboardPage = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.DashboardPage })));
-const ProfilesPage = lazy(() => import('./pages/Profiles').then(m => ({ default: m.ProfilesPage })));
-const TaxSimulatorForm = lazy(() => import('./features/simulator').then(m => ({ default: m.TaxSimulatorForm })));
-const SimulatorResult = lazy(() => import('./features/simulator').then(m => ({ default: m.SimulatorResult })));
+const DashboardPage = lazy(() =>
+    import('./pages/Dashboard').then((m) => ({ default: m.DashboardPage })),
+);
+const ProfilesPage = lazy(() =>
+    import('./pages/Profiles').then((m) => ({ default: m.ProfilesPage })),
+);
+const TaxSimulatorForm = lazy(() =>
+    import('./features/simulator').then((m) => ({
+        default: m.TaxSimulatorForm,
+    })),
+);
+const SimulatorResult = lazy(() =>
+    import('./features/simulator').then((m) => ({
+        default: m.SimulatorResult,
+    })),
+);
 
 // シミュレーターページのラッパー
 const SimulatorPage = () => (
     <div className="container mx-auto py-12 px-6 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start animate-in slide-in-from-bottom-4 duration-500">
             <div className="lg:col-span-4 lg:sticky lg:top-32">
-                <Suspense fallback={<div className="h-64 bg-white border border-slate-100 rounded-xl animate-pulse" />}>
+                <Suspense
+                    fallback={
+                        <div className="h-64 bg-white border border-slate-100 rounded-xl animate-pulse" />
+                    }
+                >
                     <TaxSimulatorForm />
                 </Suspense>
             </div>
             <div className="lg:col-span-8">
-                <Suspense fallback={<div className="h-96 bg-white border border-slate-100 rounded-xl animate-pulse" />}>
+                <Suspense
+                    fallback={
+                        <div className="h-96 bg-white border border-slate-100 rounded-xl animate-pulse" />
+                    }
+                >
                     <SimulatorResult />
                 </Suspense>
             </div>
@@ -41,7 +68,9 @@ const RootLayout = () => {
 
     const mobileNavClass = ({ isActive }: { isActive: boolean }) =>
         `flex-1 min-w-[100px] py-4 text-[10px] font-black uppercase tracking-widest transition-colors ${
-            isActive ? 'text-blue-600 border-b-2 border-blue-600' : 'text-slate-400'
+            isActive
+                ? 'text-blue-600 border-b-2 border-blue-600'
+                : 'text-slate-400'
         }`;
 
     return (
@@ -54,7 +83,9 @@ const RootLayout = () => {
                         onClick={() => navigate('/')}
                     >
                         <div className="w-10 h-10 bg-slate-900 rounded-xl flex items-center justify-center shadow-lg shadow-slate-200">
-                            <span className="text-white font-black text-xl">T</span>
+                            <span className="text-white font-black text-xl">
+                                T
+                            </span>
                         </div>
                         <div>
                             <h1 className="text-lg font-black tracking-tighter leading-none">
@@ -85,7 +116,6 @@ const RootLayout = () => {
                             マイ・タックス
                         </NavLink>
                     </nav>
-
                 </div>
 
                 {/* モバイルナビ */}
@@ -106,12 +136,16 @@ const RootLayout = () => {
             </header>
 
             <main className="min-h-[calc(100vh-80px)]">
-                <Suspense fallback={
-                    <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
-                        <div className="w-10 h-10 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin" />
-                        <p className="text-sm font-bold text-slate-400">読み込み中...</p>
-                    </div>
-                }>
+                <Suspense
+                    fallback={
+                        <div className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+                            <div className="w-10 h-10 border-4 border-slate-200 border-t-blue-600 rounded-full animate-spin" />
+                            <p className="text-sm font-bold text-slate-400">
+                                読み込み中...
+                            </p>
+                        </div>
+                    }
+                >
                     <Outlet />
                 </Suspense>
             </main>
@@ -120,9 +154,13 @@ const RootLayout = () => {
                 <div className="container mx-auto px-6 text-center">
                     <div className="flex items-center justify-center gap-3 mb-6">
                         <div className="w-8 h-8 bg-slate-900 rounded flex items-center justify-center">
-                            <span className="text-white font-black text-sm">T</span>
+                            <span className="text-white font-black text-sm">
+                                T
+                            </span>
                         </div>
-                        <span className="font-black tracking-tighter text-sm uppercase">Tax Mieruka</span>
+                        <span className="font-black tracking-tighter text-sm uppercase">
+                            Tax Mieruka
+                        </span>
                     </div>
                     <p className="text-xs font-bold text-slate-400 tracking-widest uppercase mb-4">
                         Data Source: Ministry of Finance Japan

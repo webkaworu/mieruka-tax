@@ -17,6 +17,12 @@ const routes = new Hono()
   .get('/expenditures', (c) => {
     return c.json([] as ExpenditureSummary[]);
   })
+  .get('/fiscal-revenue', (c) => {
+    return c.json({ revenue: 0 });
+  })
+  .get('/fiscal-availability', (c) => {
+    return c.json([] as any[]);
+  })
   .get('/expenditures/:categoryId/timeseries', (c) => {
     return c.json([] as any[]);
   })

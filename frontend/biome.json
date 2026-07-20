@@ -1,0 +1,69 @@
+{
+    "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+    "files": {
+        "includes": ["**", "!dist"]
+    },
+    "formatter": {
+        "enabled": true,
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "trailingNewline": true
+    },
+    "javascript": {
+        "jsxRuntime": "transparent",
+        "formatter": {
+            "quoteStyle": "single",
+            "jsxQuoteStyle": "double",
+            "semicolons": "always",
+            "trailingCommas": "all"
+        }
+    },
+    "css": {
+        "parser": {
+            "tailwindDirectives": true
+        }
+    },
+    "linter": {
+        "enabled": true,
+        "includes": [
+            "src/**/*.ts",
+            "src/**/*.tsx",
+            "src/**/*.css",
+            "vite.config.ts"
+        ],
+        "rules": {
+            "preset": "recommended",
+            "a11y": {
+                "noStaticElementInteractions": "off",
+                "useButtonType": "off",
+                "useKeyWithClickEvents": "off",
+                "noLabelWithoutControl": "off"
+            },
+            "suspicious": {
+                "noArrayIndexKey": "off",
+                "noExplicitAny": "off"
+            },
+            "correctness": {
+                "useExhaustiveDependencies": "error",
+                "useHookAtTopLevel": "error"
+            },
+            "style": {
+                "noNonNullAssertion": "off",
+                "noRestrictedImports": {
+                    "level": "error",
+                    "options": {
+                        "patterns": [
+                            {
+                                "group": ["@/features/*/*/**"],
+                                "message": "Please import from the feature's public API index file instead (e.g. `@/features/my-feature`)."
+                            }
+                        ]
+                    }
+                },
+                "useImportType": "off",
+                "useNodejsImportProtocol": "off"
+            }
+        }
+    }
+}

@@ -10,11 +10,16 @@ export const useComparisonData = (lgCodes: string[], year: number) => {
             const results = await Promise.all(
                 lgCodes.map(async (lgCode) => {
                     const [expenditures, org] = await Promise.all([
-                        dashboardService.getExpenditures({ year, lg_code: lgCode }),
-                        lgCode ? dashboardService.getOrganizationByCode(lgCode) : Promise.resolve(null),
+                        dashboardService.getExpenditures({
+                            year,
+                            lg_code: lgCode,
+                        }),
+                        lgCode
+                            ? dashboardService.getOrganizationByCode(lgCode)
+                            : Promise.resolve(null),
                     ]);
                     return { lgCode, org, expenditures };
-                })
+                }),
             );
             return results;
         },
